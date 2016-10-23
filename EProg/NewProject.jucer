@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="BICwgs" name="NewProject" projectType="guiapp" version="1.0.0"
+              bundleIdentifier="com.yourcompany.NewProject" includeBinaryInAppConfig="1"
+              jucerVersion="4.2.4">
+  <MAINGROUP id="zpO2Do" name="NewProject">
+    <GROUP id="{B37602A3-A9BB-D8B6-120A-F6CA609645C7}" name="Source">
+      <FILE id="cQpBtv" name="MainComponent.cpp" compile="1" resource="0"
+            file="Source/MainComponent.cpp"/>
+      <FILE id="sBXe2m" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
+      <FILE id="VZIOZ1" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
+    </GROUP>
+  </MAINGROUP>
+  <EXPORTFORMATS>
+    <XCODE_MAC targetFolder="Builds/MacOSX">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="NewProject"/>
+        <CONFIGURATION name="Release" isDebug="0" optimisation="3" targetName="NewProject"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_core" path="../../../../Volumes/DATOS/LIBRERIAS/JUCE/JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../../../../Volumes/DATOS/LIBRERIAS/JUCE/JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../../../Volumes/DATOS/LIBRERIAS/JUCE/JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../../../Volumes/DATOS/LIBRERIAS/JUCE/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../../../../Volumes/DATOS/LIBRERIAS/JUCE/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../../../../Volumes/DATOS/LIBRERIAS/JUCE/JUCE/modules"/>
+        <MODULEPATH id="juce_opengl" path="../../../../Volumes/DATOS/LIBRERIAS/JUCE/JUCE/modules"/>
+      </MODULEPATHS>
+    </XCODE_MAC>
+  </EXPORTFORMATS>
+  <MODULES>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="1"/>
+  </MODULES>
+  <JUCEOPTIONS/>
+</JUCERPROJECT>
