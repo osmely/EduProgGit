@@ -18,7 +18,7 @@
 MainContentComponent::MainContentComponent()
 {
 
-    setSize (800, 600);
+    setSize (1200, 800);
 
 
     comp = new Compiler();
@@ -34,7 +34,8 @@ MainContentComponent::MainContentComponent()
     ;
 
 
-    comp->build(script1);
+
+    //comp->build(script1);
 
 
 

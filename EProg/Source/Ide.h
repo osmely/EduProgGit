@@ -103,6 +103,7 @@ private:
     ScopedPointer<TextButton> runButton;
     ScopedPointer<TextButton> addConsolaButton;
     ScopedPointer<TextButton> addLienzoButton;
+    ScopedPointer<TextButton> addCodeButton;
 
     AppMultiDocumentPanel multiDocumentPanel;
 

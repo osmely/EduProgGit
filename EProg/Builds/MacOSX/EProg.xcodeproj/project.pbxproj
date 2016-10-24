@@ -34,6 +34,7 @@
 		FE35A7881DBBDADD000C965F /* scriptstdstring_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE35A7821DBBDADD000C965F /* scriptstdstring_utils.cpp */; };
 		FE35A7891DBBDADD000C965F /* weakref.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE35A7841DBBDADD000C965F /* weakref.cpp */; };
 		FE35A78E1DBBDB07000C965F /* scriptarray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE35A78C1DBBDB07000C965F /* scriptarray.cpp */; };
+		FE35A7991DBDBC54000C965F /* scriptbuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FE35A7971DBDBC54000C965F /* scriptbuilder.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -873,6 +874,8 @@
 		FE35A7921DBC1652000C965F /* CodeEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CodeEditor.h; path = ../../Source/CodeEditor.h; sourceTree = "<group>"; };
 		FE35A7931DBC314F000C965F /* LienzoViewer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LienzoViewer.h; path = ../../Source/LienzoViewer.h; sourceTree = "<group>"; };
 		FE35A7951DBC403E000C965F /* ConsoleViewer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ConsoleViewer.h; path = ../../Source/ConsoleViewer.h; sourceTree = "<group>"; };
+		FE35A7971DBDBC54000C965F /* scriptbuilder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = scriptbuilder.cpp; sourceTree = "<group>"; };
+		FE35A7981DBDBC54000C965F /* scriptbuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scriptbuilder.h; sourceTree = "<group>"; };
 		FE6D744187E746277B889F9A /* juce_StringPairArray.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = juce_StringPairArray.cpp; path = ../../JuceLibraryCode/modules/juce_core/text/juce_StringPairArray.cpp; sourceTree = SOURCE_ROOT; };
 		FEABC24EE8E33282634F078F /* juce_FileBrowserComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = juce_FileBrowserComponent.cpp; path = ../../JuceLibraryCode/modules/juce_gui_basics/filebrowser/juce_FileBrowserComponent.cpp; sourceTree = SOURCE_ROOT; };
 		FEADE23743B396ABE7EF6286 /* juce_Array.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_Array.h; path = ../../JuceLibraryCode/modules/juce_core/containers/juce_Array.h; sourceTree = SOURCE_ROOT; };
@@ -2473,6 +2476,7 @@
 		FE35A78A1DBBDAF3000C965F /* Angel */ = {
 			isa = PBXGroup;
 			children = (
+				FE35A7961DBDBC54000C965F /* scriptbuilder */,
 				FE35A77C1DBBDADD000C965F /* scripthandle */,
 				FE35A77F1DBBDADD000C965F /* scriptstdstring */,
 				FE35A7831DBBDADD000C965F /* weakref */,
@@ -2503,6 +2507,16 @@
 				FE35A7951DBC403E000C965F /* ConsoleViewer.h */,
 			);
 			name = IDE;
+			sourceTree = "<group>";
+		};
+		FE35A7961DBDBC54000C965F /* scriptbuilder */ = {
+			isa = PBXGroup;
+			children = (
+				FE35A7971DBDBC54000C965F /* scriptbuilder.cpp */,
+				FE35A7981DBDBC54000C965F /* scriptbuilder.h */,
+			);
+			name = scriptbuilder;
+			path = ../../Source/AngelScript/add_on/scriptbuilder;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2583,6 +2597,7 @@
 				9CC5027B70E697100738AB43 /* MainComponent.cpp in Sources */,
 				E6E68094449D66E8D62C3DB4 /* Main.cpp in Sources */,
 				03E0767CEA8CD76D57BE8389 /* juce_core.mm in Sources */,
+				FE35A7991DBDBC54000C965F /* scriptbuilder.cpp in Sources */,
 				FE35A7881DBBDADD000C965F /* scriptstdstring_utils.cpp in Sources */,
 				FE35A7791DBBDA92000C965F /* Ide.cpp in Sources */,
 				FE35A7781DBBDA92000C965F /* Compiler.cpp in Sources */,

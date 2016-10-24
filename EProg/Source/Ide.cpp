@@ -28,6 +28,10 @@ Ide::Ide ()
     addLienzoButton->setButtonText (TRANS("Lienzo++"));
     addLienzoButton->addListener (this);
 
+    addAndMakeVisible (addCodeButton = new TextButton ("new button"));
+    addCodeButton->setButtonText (TRANS("Code++"));
+    addCodeButton->addListener (this);
+
 
 
 
@@ -74,7 +78,7 @@ Ide::Ide ()
     instance = this;
 
 
-    setSize (600, 400);
+    setSize (800, 600);
 }
 
 Ide::~Ide(){
@@ -95,7 +99,7 @@ void Ide::resized(){
     buildButton->setBounds (getWidth() - 172, 16, 64, 24);
     addConsolaButton->setBounds (getWidth() - 250, 16, 64, 24);
     addLienzoButton->setBounds (getWidth() - 350, 16, 64, 24);
-
+    addCodeButton->setBounds (getWidth() - 430, 16, 64, 24);
 
 }
 
@@ -108,10 +112,24 @@ void Ide::buttonClicked (Button* buttonThatWasClicked){
         _compiler->run(false);
 
     }else if (buttonThatWasClicked == buildButton){
-        std::string script = _firstEditor->getText().toStdString();
 
-        if(_compiler->build(script) >= 0){
+        int countD = multiDocumentPanel.getNumDocuments();
+        int result = 0;
+        for (int i = 0; i < countD; i++) {
+            if (CodeEditor* view = dynamic_cast<CodeEditor*> (multiDocumentPanel.getDocument(i))){
+                std::string code = view->getText().toStdString();
+                if(code.length() > 0)
+                   result = _compiler->addSection(code, view->getName().toStdString());
 
+                if(result < 0){
+                    break;
+                }
+            };
+        }
+
+
+        if(result == 0){
+            _compiler->build();
         }else{
             _compiler->clear();
         }
@@ -146,7 +164,21 @@ void Ide::buttonClicked (Button* buttonThatWasClicked){
             addLienzoViewer(text, Image());
         }
 
-    }
+    }else if(buttonThatWasClicked == addCodeButton){
+        AlertWindow w ("Agregar nuevo modulo",
+                       "Establezca el Identificador del nuevo modulo",
+                       AlertWindow::QuestionIcon);
 
+        w.addTextEditor ("text", "", "Identificador:");
+
+        w.addButton ("OK",     1, KeyPress (KeyPress::returnKey, 0, 0));
+        w.addButton ("Cancel", 0, KeyPress (KeyPress::escapeKey, 0, 0));
+
+        if (w.runModalLoop() != 0) {
+            String text = w.getTextEditorContents ("text");
+            addCodeEditor(text, "");
+        }
+    }
+    
 }
 

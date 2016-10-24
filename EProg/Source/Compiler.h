@@ -30,7 +30,7 @@
 #include "add_on/scriptstdstring/scriptstdstring.h"
 #include "add_on/scripthandle/scripthandle.h"
 #include "add_on/weakref/weakref.h"
-
+#include "add_on/scriptbuilder/scriptbuilder.h"
 
 
 using namespace std;
@@ -51,6 +51,7 @@ class Compiler {
     int configureEngine();
 
 
+
     asIScriptEngine *engine = nullptr;
     asIScriptContext *scriptContext = nullptr;
     asIScriptFunction *mainF;
@@ -63,9 +64,10 @@ public:
 
     Compiler();
     void printConsole(const std::string &msg);
-    int build(const std::string &script);
+    int build();
     int run(bool resetGlobals = true);
     void clear();
+    int addSection(const std::string &script, const std::string &sectionName);
 
     std::function<void(const std::string &data)> callback;
 

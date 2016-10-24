@@ -120,11 +120,9 @@ int Compiler::run(bool resetGlobals){
 
 }
 
-
-int Compiler::build(const std::string &script){
-
+int Compiler::addSection(const std::string &script, const std::string &sectionName){
     int r = 0;
-    std::string moduleName = "Script";
+    std::string moduleName = sectionName;
     mod = engine->GetModule(moduleName.c_str(), asGM_ALWAYS_CREATE);
 
     r = mod->AddScriptSection(moduleName.c_str(), script.c_str(), strlen(script.c_str()));
@@ -133,6 +131,22 @@ int Compiler::build(const std::string &script){
         clear();
         return -1;
     }
+
+    return r;
+}
+
+int Compiler::build(){
+
+    int r = 0;
+    std::string moduleName = "Script";
+//    mod = engine->GetModule(moduleName.c_str(), asGM_ALWAYS_CREATE);
+//
+//    r = mod->AddScriptSection(moduleName.c_str(), script.c_str(), strlen(script.c_str()));
+//    if( r < 0 ){
+//        engine->WriteMessage(moduleName.c_str(), -1, -1, asMSGTYPE_ERROR, "Internal error: AddScriptSection() failed");
+//        clear();
+//        return -1;
+//    }
 
     r = mod->Build();
     if( r < 0 ){
@@ -148,6 +162,8 @@ int Compiler::build(const std::string &script){
         clear();
         return -1;
     }
+
+    mod->SetDefaultNamespace("Main");
 
     mainF = mod->GetFunctionByDecl("void main()");
 
