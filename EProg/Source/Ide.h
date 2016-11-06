@@ -28,10 +28,22 @@ public:
         multiDocumentPanel.setLayoutMode (MultiDocumentPanel::FloatingWindows);
     }
 
+
+    void setCommonProperties(MultiDocumentPanelWindow* window){
+        window->setTitleBarButtonsRequired(juce::DialogWindow::closeButton, true);
+        window->setTitleBarHeight(24);
+        window->setTitleBarTextCentred(false);
+    }
+
+
     CodeEditor* addCodeEditor (const String& name, const String& content){
         CodeEditor* newNote = new CodeEditor (name, content);
         newNote->setSize (350, 200);
         multiDocumentPanel.addDocument (newNote, Colours::lightblue.withAlpha (0.6f), true);
+
+        MultiDocumentPanelWindow* window = static_cast<MultiDocumentPanelWindow*>(multiDocumentPanel.getDocument(multiDocumentPanel.getNumDocuments()-1)->getParentComponent());
+        setCommonProperties(window);
+
         return newNote;
     }
 
@@ -39,6 +51,10 @@ public:
         LienzoViewer* newNote = new LienzoViewer (name, content);
         newNote->setSize (200, 200);
         multiDocumentPanel.addDocument (newNote, Colours::lightblue.withAlpha (0.6f), true);
+
+        MultiDocumentPanelWindow* window = static_cast<MultiDocumentPanelWindow*>(multiDocumentPanel.getDocument(multiDocumentPanel.getNumDocuments()-1)->getParentComponent());
+        setCommonProperties(window);
+
         return newNote;
     }
 
@@ -58,8 +74,12 @@ public:
 
     ConsoleViewer* addConsoleViewer (const String& name, const String& content){
         ConsoleViewer* newNote = new ConsoleViewer (name, content);
-        newNote->setSize (200, 100);
+        newNote->setSize (200, 50);
         multiDocumentPanel.addDocument (newNote, Colours::lightblue.withAlpha (0.6f), true);
+
+        MultiDocumentPanelWindow* window = static_cast<MultiDocumentPanelWindow*>(multiDocumentPanel.getDocument(multiDocumentPanel.getNumDocuments()-1)->getParentComponent());
+        setCommonProperties(window);
+
         return newNote;
     }
 
@@ -94,16 +114,11 @@ private:
 
     void buttonClicked (Button* buttonThatWasClicked);
 
-    //El editor de codigo por defecto.
-    CodeEditor *_firstEditor;
-
-
-
-    ScopedPointer<TextButton> buildButton;
-    ScopedPointer<TextButton> runButton;
-    ScopedPointer<TextButton> addConsolaButton;
-    ScopedPointer<TextButton> addLienzoButton;
-    ScopedPointer<TextButton> addCodeButton;
+    ScopedPointer<DrawableButton> buildButton;
+    ScopedPointer<DrawableButton> runButton;
+    ScopedPointer<DrawableButton> addConsolaButton;
+    ScopedPointer<DrawableButton> addLienzoButton;
+    ScopedPointer<DrawableButton> addCodeButton;
 
     AppMultiDocumentPanel multiDocumentPanel;
 

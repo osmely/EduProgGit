@@ -55,7 +55,7 @@ class Compiler {
     asIScriptEngine *engine = nullptr;
     asIScriptContext *scriptContext = nullptr;
     asIScriptFunction *mainF;
-    asIScriptModule *mod;
+    asIScriptModule *mainMod;
 
 
 public:

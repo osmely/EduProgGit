@@ -879,6 +879,7 @@
 		FE6D744187E746277B889F9A /* juce_StringPairArray.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = juce_StringPairArray.cpp; path = ../../JuceLibraryCode/modules/juce_core/text/juce_StringPairArray.cpp; sourceTree = SOURCE_ROOT; };
 		FEABC24EE8E33282634F078F /* juce_FileBrowserComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = juce_FileBrowserComponent.cpp; path = ../../JuceLibraryCode/modules/juce_gui_basics/filebrowser/juce_FileBrowserComponent.cpp; sourceTree = SOURCE_ROOT; };
 		FEADE23743B396ABE7EF6286 /* juce_Array.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_Array.h; path = ../../JuceLibraryCode/modules/juce_core/containers/juce_Array.h; sourceTree = SOURCE_ROOT; };
+		FED2110F1DCFAFF6004DFB43 /* ImagesIde.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ImagesIde.h; path = ../../Source/ImagesIde.h; sourceTree = "<group>"; };
 		FF331A2F653B4516BA3AEA10 /* juce_ApplicationCommandManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_ApplicationCommandManager.h; path = ../../JuceLibraryCode/modules/juce_gui_basics/commands/juce_ApplicationCommandManager.h; sourceTree = SOURCE_ROOT; };
 		FF3C2A5EA10EED25E0228722 /* juce_File.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_File.h; path = ../../JuceLibraryCode/modules/juce_core/files/juce_File.h; sourceTree = SOURCE_ROOT; };
 		FF640602CF0004840BAB0240 /* libpng_readme.txt */ = {isa = PBXFileReference; lastKnownFileType = text.txt; name = libpng_readme.txt; path = ../../JuceLibraryCode/modules/juce_graphics/image_formats/pnglib/libpng_readme.txt; sourceTree = SOURCE_ROOT; };
@@ -1492,6 +1493,7 @@
 		6F12487422EF2724B16D052C /* NewProject */ = {
 			isa = PBXGroup;
 			children = (
+				FED2110C1DCFAF01004DFB43 /* Resource */,
 				3869322A7A530B6A52ED0AD2 /* Source */,
 			);
 			name = NewProject;
@@ -2505,6 +2507,7 @@
 				FE35A7921DBC1652000C965F /* CodeEditor.h */,
 				FE35A7931DBC314F000C965F /* LienzoViewer.h */,
 				FE35A7951DBC403E000C965F /* ConsoleViewer.h */,
+				FED2110F1DCFAFF6004DFB43 /* ImagesIde.h */,
 			);
 			name = IDE;
 			sourceTree = "<group>";
@@ -2517,6 +2520,14 @@
 			);
 			name = scriptbuilder;
 			path = ../../Source/AngelScript/add_on/scriptbuilder;
+			sourceTree = "<group>";
+		};
+		FED2110C1DCFAF01004DFB43 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Resource;
+			path = ../../Resource;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

@@ -1,7 +1,22 @@
 
 
 #include "Ide.h"
+#include "ImagesIde.h"
 Ide* Ide::instance = nullptr;
+
+#define defineImagesStates(__PREFIX__, __imageData__, __imageSize__)  DrawableImage __PREFIX__ ## _Image_normal; \
+__PREFIX__ ## _Image_normal.setImage (ImageCache::getFromMemory (__imageData__, __imageSize__)); \
+ \
+DrawableImage __PREFIX__ ## _Image_down; \
+__PREFIX__ ## _Image_down.setImage (ImageCache::getFromMemory (__imageData__, __imageSize__)); \
+__PREFIX__ ## _Image_down.setOverlayColour (Colours::black.withAlpha (0.3f)); \
+ \
+DrawableImage __PREFIX__ ## _Image_over; \
+__PREFIX__ ## _Image_over.setImage (ImageCache::getFromMemory (__imageData__, __imageSize__)); \
+__PREFIX__ ## _Image_over.setOverlayColour (Colours::green.withAlpha (0.05f)); \
+
+
+
 
 //==============================================================================
 Ide::Ide ()
@@ -9,33 +24,41 @@ Ide::Ide ()
 
 
     addAndMakeVisible (multiDocumentPanel);
-    multiDocumentPanel.setBackgroundColour (Colours::beige);
+    multiDocumentPanel.setBackgroundColour (Colour::fromRGBA(0,0,0,0));
 
-    addAndMakeVisible (buildButton = new TextButton ("new button"));
-    buildButton->setButtonText (TRANS("BUILD"));
+    defineImagesStates(build, build_png, build_pngSize)
+    addAndMakeVisible (buildButton = new DrawableButton ("new button", DrawableButton::ImageFitted));
+    buildButton->setImages (&build_Image_normal, &build_Image_over, &build_Image_down);
     buildButton->addListener (this);
+    buildButton->setTooltip("Compilar");
 
 
-    addAndMakeVisible (runButton = new TextButton ("new button"));
-    runButton->setButtonText (TRANS("RUN"));
+    defineImagesStates(play, play_png, play_pngSize)
+    addAndMakeVisible (runButton = new DrawableButton ("new button", DrawableButton::ImageFitted));
+    runButton->setImages (&play_Image_normal, &play_Image_over, &play_Image_down);
     runButton->addListener (this);
+    runButton->setTooltip("Ejecutar");
 
-    addAndMakeVisible (addConsolaButton = new TextButton ("new button"));
-    addConsolaButton->setButtonText (TRANS("Consola++"));
+
+    defineImagesStates(consola, consola_png, consola_pngSize)
+    addAndMakeVisible (addConsolaButton = new DrawableButton ("new button", DrawableButton::ImageFitted));
+    addConsolaButton->setImages (&consola_Image_normal, &consola_Image_over, &consola_Image_down);
     addConsolaButton->addListener (this);
+    addConsolaButton->setTooltip("Agregar una nueva consola");
 
-    addAndMakeVisible (addLienzoButton = new TextButton ("new button"));
-    addLienzoButton->setButtonText (TRANS("Lienzo++"));
+
+    defineImagesStates(lienzo, lienzo_png, lienzo_pngSize)
+    addAndMakeVisible (addLienzoButton = new DrawableButton ("new button", DrawableButton::ImageFitted));
+    addLienzoButton->setImages (&lienzo_Image_normal, &lienzo_Image_over, &lienzo_Image_down);
     addLienzoButton->addListener (this);
+    addConsolaButton->setTooltip("Agregar un lienzo");
 
-    addAndMakeVisible (addCodeButton = new TextButton ("new button"));
-    addCodeButton->setButtonText (TRANS("Code++"));
+
+    defineImagesStates(module, module_png, module_pngSize)
+    addAndMakeVisible (addCodeButton = new DrawableButton ("new button", DrawableButton::ImageFitted));
+    addCodeButton->setImages (&module_Image_normal, &module_Image_over, &module_Image_down);
     addCodeButton->addListener (this);
-
-
-
-
-
+    addCodeButton->setTooltip("Agregar un nuevo modulo");
 
 
 
@@ -64,20 +87,15 @@ Ide::Ide ()
     code << "    MostrarTexto(\"px: \" + px, \"Consola2\");\n";
     code << "    MostrarTexto(\"px: \" + px + \"\\n\");\n";
     code << "}\n";
-    
-
 
     updateLayoutMode();
 
-    _firstEditor = addCodeEditor ("Main", code.str());
+
+    addCodeEditor ("Main", code.str());
     addConsoleViewer("Consola", "");
 
 
-
-    
     instance = this;
-
-
     setSize (800, 600);
 }
 
@@ -86,21 +104,26 @@ Ide::~Ide(){
     buildButton = nullptr;
 }
 
-
 void Ide::paint (Graphics& g){
-    g.fillAll (Colour (0xff));
+    g.fillAll (Colours::beige);
+    g.setColour (Colour (0xffa52a97));
+    g.fillRect (36, 180, 100, 100);
 }
 
 void Ide::resized(){
     Rectangle<int> area (getLocalBounds());
     multiDocumentPanel.setBounds (area);
 
-    runButton->setBounds (getWidth() - 72, 16, 64, 24);
-    buildButton->setBounds (getWidth() - 172, 16, 64, 24);
-    addConsolaButton->setBounds (getWidth() - 250, 16, 64, 24);
-    addLienzoButton->setBounds (getWidth() - 350, 16, 64, 24);
-    addCodeButton->setBounds (getWidth() - 430, 16, 64, 24);
+    int margen = 50;
+    int deltab = 2;
+    int deltaSections = 10;
 
+    buildButton->setBounds (getWidth() - margen, 16, 45, 44);
+    runButton->setBounds (getWidth() - margen, buildButton->getBottom() + deltab, 45, 44);
+
+    addCodeButton->setBounds (getWidth() - margen, runButton->getBottom() + deltaSections, 45, 44);
+    addConsolaButton->setBounds (getWidth() - margen, addCodeButton->getBottom() + deltab, 45, 44);
+    addLienzoButton->setBounds (getWidth() - margen, addConsolaButton->getBottom() + deltab, 45, 44);
 }
 
 void Ide::buttonClicked (Button* buttonThatWasClicked){
@@ -113,10 +136,19 @@ void Ide::buttonClicked (Button* buttonThatWasClicked){
 
     }else if (buttonThatWasClicked == buildButton){
 
+
         int countD = multiDocumentPanel.getNumDocuments();
+
+        if(countD == 0)
+            return;
+        
+        _compiler->clear();
+
         int result = 0;
+
         for (int i = 0; i < countD; i++) {
             if (CodeEditor* view = dynamic_cast<CodeEditor*> (multiDocumentPanel.getDocument(i))){
+
                 std::string code = view->getText().toStdString();
                 if(code.length() > 0)
                    result = _compiler->addSection(code, view->getName().toStdString());

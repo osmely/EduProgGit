@@ -67,7 +67,9 @@ void printConsoleViewer(const std::string &text, const std::string &name, int ty
 }
 
 
-Compiler::Compiler(){
+Compiler::Compiler():
+mainMod(nullptr)
+{
     callback = nullptr;
 
     Compiler::instance = this;
@@ -83,6 +85,12 @@ void Compiler::clear(){
     if(scriptContext)
         scriptContext->Release();
     scriptContext = nullptr;
+    
+    if(mainMod){
+        mainMod->Discard();
+        mainMod = nullptr;
+    }
+
 }
 
 int Compiler::run(bool resetGlobals){
@@ -100,8 +108,15 @@ int Compiler::run(bool resetGlobals){
             return -1;
         }
 
-        if(resetGlobals)
-            mod->ResetGlobalVars();
+        if(resetGlobals){
+
+            int mc = engine->GetModuleCount();
+            for (int i = 0; i < mc; i++) {
+                asIScriptModule *mod = engine->GetModuleByIndex(i);
+                mod->ResetGlobalVars();
+            }
+
+        }
 
         r = scriptContext->Execute();
 
@@ -121,13 +136,15 @@ int Compiler::run(bool resetGlobals){
 }
 
 int Compiler::addSection(const std::string &script, const std::string &sectionName){
-    int r = 0;
-    std::string moduleName = sectionName;
-    mod = engine->GetModule(moduleName.c_str(), asGM_ALWAYS_CREATE);
 
-    r = mod->AddScriptSection(moduleName.c_str(), script.c_str(), strlen(script.c_str()));
+    int r = 0;
+    std::string moduleName = "Main";
+    if(!mainMod)
+        mainMod = engine->GetModule(moduleName.c_str(), asGM_ALWAYS_CREATE);
+
+    r = mainMod->AddScriptSection(sectionName.c_str(), script.c_str(), strlen(script.c_str()));
     if( r < 0 ){
-        engine->WriteMessage(moduleName.c_str(), -1, -1, asMSGTYPE_ERROR, "Internal error: AddScriptSection() failed");
+        engine->WriteMessage(sectionName.c_str(), -1, -1, asMSGTYPE_ERROR, "Internal error: AddScriptSection() failed");
         clear();
         return -1;
     }
@@ -148,12 +165,14 @@ int Compiler::build(){
 //        return -1;
 //    }
 
-    r = mod->Build();
+
+
+    mainMod->Build();
     if( r < 0 ){
         clear();
-        //engine->WriteMessage(moduleName.c_str(), -1, -1, asMSGTYPE_ERROR, "Build failed.");
         return -1;
     }
+
 
     scriptContext = engine->CreateContext();
     if( scriptContext == 0 )
@@ -163,17 +182,16 @@ int Compiler::build(){
         return -1;
     }
 
-    mod->SetDefaultNamespace("Main");
 
-    mainF = mod->GetFunctionByDecl("void main()");
+    //modMain->SetDefaultNamespace("");
+    mainF = mainMod->GetFunctionByDecl("void main()");
 
     if(!mainF){
         engine->WriteMessage(moduleName.c_str(), -1, -1, asMSGTYPE_ERROR, "Cannot find 'void main()'");
         clear();
         return -1;
     }
-    
-    
+
     return r;
 }
 
