@@ -113,6 +113,7 @@ private:
     Compiler *_compiler;
 
     void buttonClicked (Button* buttonThatWasClicked);
+    void drawLineBetweenPoints(Graphics& g, const juce::Point<int> &p1, const juce::Point<int> &p2);
 
     ScopedPointer<DrawableButton> buildButton;
     ScopedPointer<DrawableButton> runButton;
